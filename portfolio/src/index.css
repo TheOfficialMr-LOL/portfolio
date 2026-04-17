@@ -62,19 +62,3 @@
 body {
   margin: 0;
 }
-
-.icon {
-  font-size: 22px;
-  padding: 10px;
-  border-radius: 16px;
-  background: rgba(30,30,30,0);
-  border: none;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-  color: #fff;
-}
-
-.icon:hover {
-  transform: translateY(-20px);
-}
-

@@ -1,22 +1,13 @@
-import { motion } from "framer-motion";
+//import { motion, useMotionValue, animate } from "framer-motion";
+//import { useState } from "react";
+
+import Dock from "./components/dock";
 
 function App() {
+
   return (
     <div style={styles.page}>
-      <div style={styles.wrapper}>
-        <motion.div
-          drag
-          dragElastic={0.2}
-          dragSnapToOrigin
-          dragMomentum
-          whileDrag={{ scale: 1.05 }}
-          style={styles.dock}
-        >
-        <button className="icon">About me</button>
-        <button className="icon">Tech Stack</button>
-        <button className="icon">My Journey</button>
-        </motion.div>
-      </div>
+      <Dock/>
     </div>
   );
 }
