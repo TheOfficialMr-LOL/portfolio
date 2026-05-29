@@ -43,15 +43,15 @@ export default function Dock() {
         }}
 
         whileHover={{
-            scale: 1.05,
-            y: -6,
+          scale: 1.05,
+          y: -6,
         }}
 
 
         transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 18,
+          type: "spring",
+          stiffness: 400,
+          damping: 18,
         }}
 
         onDragStart={() => setIsDragging(true)}

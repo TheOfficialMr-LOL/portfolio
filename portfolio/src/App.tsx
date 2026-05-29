@@ -2,12 +2,15 @@
 //import { useState } from "react";
 
 import Dock from "./components/dock";
+import Profile from "./sections/profile";
 
 function App() {
 
   return (
     <div style={styles.page}>
+      <br/>
       <Dock/>
+      <Profile/>
     </div>
   );
 }
