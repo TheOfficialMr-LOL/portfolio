@@ -17,8 +17,9 @@ function App() {
 
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
-    height: "100vh",
-    background: "#f7f8fa",
+    minHeight: "100vh",
+    background: "#f0f0f0",
+    paddingBottom: "30px"
   },
 
   dock: {

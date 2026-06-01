@@ -74,7 +74,7 @@ export default function Dock() {
 
 const styles: { [key: string]: React.CSSProperties } = {
   page: {
-    height: "100vh",
+    minHeight: "100vh",
     background: "#f7f8fa",
   },
 
