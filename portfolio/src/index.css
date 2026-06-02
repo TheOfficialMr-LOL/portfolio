@@ -62,3 +62,9 @@
 body {
   margin: 0;
 }
+
+.noSelect {
+  -webkit-user-select: none; /* Chrome, Safari */
+  -ms-user-select: none;     /* IE/Edge old */
+  user-select: none;         /* Standard */
+}

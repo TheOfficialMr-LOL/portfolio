@@ -102,5 +102,6 @@ const styles: { [key: string]: React.CSSProperties } = {
 
     display: "flex",
     justifyContent: "center",
+    zIndex: 100
   },
 };

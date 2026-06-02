@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  pressScale?: number;
+  hoverScale?: number;
 };
 
 function usePopOut() {
@@ -28,14 +28,14 @@ function usePopOut() {
   return { scale, press, release };
 }
 
-export function PressableCard({ children, pressScale }: Props) {
+export function PressableCard({ children, hoverScale }: Props) {
   const { scale, press, release } = usePopOut();
 
   return (
     <motion.div
 
     whileHover={{
-        scale: pressScale ?? 1.06,
+        scale: hoverScale ?? 1.06,
         y: 0,
     }}
     transition={{
@@ -44,7 +44,7 @@ export function PressableCard({ children, pressScale }: Props) {
         damping: 18,
     }}
 
-      style={{ scale , cursor: "grab"}}
+    style={{ scale , cursor: "grab"}}
       onPointerDown={press}
       onPointerUp={release}
       onPointerLeave={release}

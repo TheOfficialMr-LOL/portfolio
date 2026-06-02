@@ -53,7 +53,7 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 934px) {
     .aboutMe {
         flex-direction: column;
         text-align: center;

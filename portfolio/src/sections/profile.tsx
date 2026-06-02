@@ -90,7 +90,7 @@ export default function Profile() {
 								<br/>
 								
 								<div style={{display: "flex", flexDirection: "column", gap: "12px"}}>
-									<PressableCard pressScale={1.09}>
+									<PressableCard hoverScale={1.1}>
 										<div className="socialsBox" onClick={() => window.open("https://www.linkedin.com/in/aeshan-jiniwal-505874381/", "_blank")}>
 											<img src={linkedinIcon} alt="LinkedIn" className="socialIcon"/> <br/>
 											<span>Aeshan Jiniwal</span>
@@ -98,7 +98,7 @@ export default function Profile() {
 										</div>
 									</PressableCard>
 
-									<PressableCard pressScale={1.09}>
+									<PressableCard hoverScale={1.1}>
 										<div className="socialsBox" onClick={() => window.open("https://github.com/TheOfficialMr-LOL", "_blank")}>
 											<img src={githubIcon} alt="GitHub" className="socialIcon"/> <br/>
 											<span>TheOfficialMr-LOL</span>
@@ -106,7 +106,7 @@ export default function Profile() {
 										</div>
 									</PressableCard>
 
-									<PressableCard pressScale={1.09}>
+									<PressableCard hoverScale={1.1}>
 										<div className="socialsBox" onClick={() => window.open("https://discord.com/users/745301207043801129", "_blank")}>
 											<img src={discordIcon} alt="Discord" className="socialIcon"/> <br/>
 											<span>TheOfficialMr_LOL</span>
@@ -114,7 +114,7 @@ export default function Profile() {
 										</div>
 									</PressableCard>
 
-									<PressableCard pressScale={1.09}>
+									<PressableCard hoverScale={1.1}>
 										<div className="socialsBox" onClick={() => window.open("mailto:aeshan.jiniwal@gmail.com", "_blank")}>
 											<img src={gmailIcon} alt="Gmail" className="socialIcon"/> <br/>
 											<span>aeshan.jiniwal@gmail.com</span>
@@ -124,21 +124,57 @@ export default function Profile() {
 								</div>
 
             </div>
+						
+						{/*Spacer*/}
+						<div style={{height: "1px"}}></div>
 
             {/*Right section (about me)*/}
-						<div style={{textAlign: "left", maxWidth: "500px", marginTop: "-100px", fontWeight: "500"}}>
-								<h2 style={{color: "#5850c0"}}>About Me</h2>
-								<li>Full-stack developer</li>
-								<li>Discovered a passion for coding at the age of 11</li>
-								<li>4+ years 	experience in software development </li>
-								<li>Obsessive over clean, playful, and minimalistic UI designs</li>
-								<li>Pursuing a lifelong endeavour in understanding how the world and the software systems within it work</li>
-						</div>
+						<PressableCard hoverScale={1.05}>
+							<div style={styles.aboutMeCard} className="noSelect">
+								<div style={styles.aboutMeHeader}><span>About Me</span></div>
+
+								<div style={styles.aboutMeBody}>
+									<ul style={styles.bulletList}>
+										<li>Full-stack React/React-Native developer</li>
+										<li>Discovered a passion for coding at the age of 11</li>
+										<li>4+ years 	experience in software development </li>
+										<li>Obsessive over clean, playful, and minimalistic UI designs</li>
+										<li>Pursuing a lifelong endeavour in understanding how the world and the software systems within it work</li>
+									</ul>
+								</div>
+							</div>
+						</PressableCard>
 					</div>
         </div>
     );
 }
 
 const styles: { [key: string]: React.CSSProperties } = {
-  
+	aboutMeCard: {
+		textAlign: "left", 
+		maxWidth: "500px", 
+		marginTop: "-100px", 
+		fontWeight: "500", 
+		backgroundColor: "#F0F8FF",
+		borderRadius: "12px",
+		boxShadow: "0 10px 30px rgba(0,0,0,0.1), 0 1px 1px rgba(255,255,255,0.05) inset",
+		display: "flex",
+		flexDirection: "column",
+		overflow: "hidden"
+	},
+	bulletList: {
+		margin: 0,
+		paddingLeft: "24px",
+		paddingRight: "20px",
+		lineHeight: "1.6"
+	},
+	aboutMeHeader: {
+		backgroundColor: "#5850c0",
+		color: "#fff",
+		fontSize: "28px",
+		padding: "10px 20px",
+	},
+	aboutMeBody: {
+		padding: "16px 20px"
+	}
 };
