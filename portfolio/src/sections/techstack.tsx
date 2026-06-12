@@ -23,7 +23,10 @@ import cssHtml from "../assets/appLogos/css&htmlIcon.png";
 
 
 
-
+//check if device is mobile to prevent some pressable containers from 'popping out,'
+//which interferes with mobile scrolling
+const isTouch = window.matchMedia("(pointer: coarse)").matches;
+const isDeviceMobile = isTouch;
 
 
 const techSections = [
@@ -74,7 +77,7 @@ export default function TechStack() {
 	let animationIndex: number = 1;
 	return (
 			<div style={styles.techStackWrapper}>
-				<PressableCard hoverScale={1.02}>
+				<PressableCard hoverScale={1.02} isMobile={isDeviceMobile}>
 					<div className="cardContainer noSelect">
 					<img
 						src={backgroundImage}

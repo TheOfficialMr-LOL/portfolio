@@ -4,13 +4,14 @@ import type { ReactNode } from "react";
 type Props = {
   children: ReactNode;
   hoverScale?: number;
+  isMobile?: boolean;
 };
 
-function usePopOut() {
+function usePopOut(isMobile: boolean) {
   const scale = useMotionValue(1);
 
   const press = () => {
-    animate(scale, 0.9, {
+    animate(scale, isMobile ? 1 : 0.9, {
       type: "spring",
       stiffness: 500,
       damping: 20,
@@ -28,16 +29,20 @@ function usePopOut() {
   return { scale, press, release };
 }
 
-export function PressableCard({ children, hoverScale }: Props) {
-  const { scale, press, release } = usePopOut();
+export function PressableCard({ children, hoverScale, isMobile = false }: Props) {
+  const { scale, press, release } = usePopOut(isMobile);
 
   return (
     <motion.div
 
-    whileHover={{
-        scale: hoverScale ?? 1.06,
-        y: 0,
-    }}
+    whileHover={
+        isMobile
+          ? {y: 0}
+          : {
+              scale: hoverScale ?? 1.06,
+              y: 0
+            }
+      }
     transition={{
         type: "spring",
         stiffness: 400,

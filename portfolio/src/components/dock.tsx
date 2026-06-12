@@ -71,17 +71,17 @@ export default function Dock({activeSection}: DockProps) {
         onPointerUp={handleRelease}
         onPointerLeave={handleRelease}
       >
-        <motion.button className={`icon ${activeSection === "Profile" ? "active" : ""}`} onClick={() => scrollToSection("Profile")}>
+        <button className={`icon ${activeSection === "Profile" ? "active" : ""} noSelect`} onClick={() => scrollToSection("Profile")}>
           About me
-        </motion.button>
+        </button>
 
-        <motion.button className={`icon ${activeSection === "Techstack" ? "active" : ""}`} onClick={() => scrollToSection("Techstack")}>
+        <button className={`icon ${activeSection === "Techstack" ? "active" : ""} noSelect`} onClick={() => scrollToSection("Techstack")}>
           Tech Stack
-        </motion.button>
+        </button>
 
-        <motion.button className={`icon ${activeSection === "Journey" ? "active" : ""}`} onClick={() => scrollToSection("Journey")}>
+        <button className={`icon ${activeSection === "Journey" ? "active" : ""} noSelect`} onClick={() => scrollToSection("Journey")}>
           My Journey
-        </motion.button>
+        </button>
       </motion.div>
     </div>
   );

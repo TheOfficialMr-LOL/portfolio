@@ -67,4 +67,13 @@ body {
   -webkit-user-select: none; /* Chrome, Safari */
   -ms-user-select: none;     /* IE/Edge old */
   user-select: none;         /* Standard */
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/*Disable hover effects for mobile devices*/
+@media (hover: none) {
+  .icon:hover {
+    transform: none;
+  }
 }
