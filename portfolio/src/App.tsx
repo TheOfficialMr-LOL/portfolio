@@ -1,19 +1,42 @@
 //import { motion, useMotionValue, animate } from "framer-motion";
-//import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Dock from "./components/dock";
 import Profile from "./sections/profile";
 import TechStack from "./sections/techstack";
 
+type Section = "Profile" | "Techstack" | "Journey";
+
 function App() {
+
+  //track which section user is on
+  const [activateSection, setActiveSection] = useState<Section>("Profile");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>("section");
+
+    //identify which section user is on
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        entries.forEach((entry) => {
+          entry.isIntersecting ? setActiveSection(entry.target.id as Section) : "";
+        });
+      },
+      {threshold: 0.5}
+    );
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div style={styles.page}>
       <br/>
-      <Dock/>
-      <Profile/>
+      <Dock activeSection={activateSection}/>
+      <section id="Profile" style={{scrollMarginTop: "80px"}}><Profile/></section>
       <br/><br/>
-      <TechStack/>
+      <section id="Techstack"><TechStack/></section>
     </div>
   );
 }

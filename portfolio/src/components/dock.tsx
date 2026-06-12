@@ -2,7 +2,14 @@ import { motion, useMotionValue, animate } from "framer-motion";
 import { useState } from "react";
 import "./dock.css";
 
-export default function Dock() {
+type Section = "Profile" | "Techstack" | "Journey";
+
+type DockProps = {
+  activeSection: Section;
+}
+
+
+export default function Dock({activeSection}: DockProps) {
 
   const scale = useMotionValue<number>(1);
   const y = useMotionValue<number>(0);
@@ -30,7 +37,7 @@ export default function Dock() {
 
   return (
     <div style={styles.wrapper}>
-    <motion.div
+      <motion.div
         drag
         dragElastic={0.2}
         dragSnapToOrigin
@@ -63,11 +70,19 @@ export default function Dock() {
         onPointerDown={handlePress}
         onPointerUp={handleRelease}
         onPointerLeave={handleRelease}
-        >
-    <button className="icon">About me</button>
-    <button className="icon">Tech Stack</button>
-    <button className="icon">My Journey</button>
-    </motion.div>
+      >
+        <motion.button className={`icon ${activeSection === "Profile" ? "active" : ""}`} onClick={() => scrollToSection("Profile")}>
+          About me
+        </motion.button>
+
+        <motion.button className={`icon ${activeSection === "Techstack" ? "active" : ""}`} onClick={() => scrollToSection("Techstack")}>
+          Tech Stack
+        </motion.button>
+
+        <motion.button className={`icon ${activeSection === "Journey" ? "active" : ""}`} onClick={() => scrollToSection("Journey")}>
+          My Journey
+        </motion.button>
+      </motion.div>
     </div>
   );
 }
@@ -105,3 +120,11 @@ const styles: { [key: string]: React.CSSProperties } = {
     zIndex: 100
   },
 };
+
+
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}

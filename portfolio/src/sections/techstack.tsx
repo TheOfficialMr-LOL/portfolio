@@ -1,4 +1,4 @@
-import { motion, useMotionValue, animate } from "framer-motion";
+import { motion } from "framer-motion";
 import { PressableCard } from "../animations/popOut";
 
 import backgroundImage from "../assets/backgroundImageLight.png";
