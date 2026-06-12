@@ -3,6 +3,7 @@
 
 import Dock from "./components/dock";
 import Profile from "./sections/profile";
+import TechStack from "./sections/techstack";
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
       <br/>
       <Dock/>
       <Profile/>
+      <br/><br/>
+      <TechStack/>
     </div>
   );
 }

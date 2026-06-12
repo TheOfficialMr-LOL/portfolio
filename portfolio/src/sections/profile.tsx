@@ -1,9 +1,9 @@
 import profileImg from "../assets/LOL-img.jpg";
-import discordIcon from "../assets/discord.png";
-import githubIcon from "../assets/github.png";
-import linkedinIcon from "../assets/linkedin.png";
-import gmailIcon from "../assets/gmail.png";
-import externalLink from "../assets/external-link.png";
+import discordIcon from "../assets/socialLinks/discord.png";
+import githubIcon from "../assets/socialLinks/github.png";
+import linkedinIcon from "../assets/socialLinks/linkedin.png";
+import gmailIcon from "../assets/socialLinks/gmail.png";
+import externalLink from "../assets/socialLinks/external-link.png";
 
 import { motion, useMotionValue, animate } from "framer-motion";
 
@@ -139,7 +139,7 @@ export default function Profile() {
 										<li>Discovered a passion for coding at the age of 11</li>
 										<li>4+ years 	experience in software development </li>
 										<li>Obsessive over clean, playful, and minimalistic UI designs</li>
-										<li>Pursuing a lifelong endeavour in understanding how the world and the software systems within it work</li>
+										<li>Pursuing a lifelong endeavour in learning new technologies</li>
 									</ul>
 								</div>
 							</div>
