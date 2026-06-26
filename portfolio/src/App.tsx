@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Dock from "./components/dock";
 import Profile from "./sections/profile";
 import TechStack from "./sections/techstack";
+import Journey from "./sections/journey";
 
 type Section = "Profile" | "Techstack" | "Journey";
 
@@ -37,6 +38,8 @@ function App() {
       <section id="Profile" style={{scrollMarginTop: "80px"}}><Profile/></section>
       <br/><br/>
       <section id="Techstack"><TechStack/></section>
+      <br/><br/>
+      <section id="Journey"><Journey/></section>
     </div>
   );
 }
