@@ -135,7 +135,6 @@ export default function Dock({activeSection}: DockProps) {
 
     Right: () => {
       const rect = dockRef.current!.getBoundingClientRect();
-      //console.log(viewport.height / 2 - dockSizes.vertical.height / 2 - rect.top + y.get());
       return {
         x: viewport.width - dockSizes.vertical.width*3 - 20,
         y: viewport.height / 2 - dockSizes.vertical.height / 2 - rect.top + y.get()
@@ -143,10 +142,9 @@ export default function Dock({activeSection}: DockProps) {
     },
 
     Left: () => {
-      const rect = dockRef.current!.getBoundingClientRect(); //kinda unreliable due to the rotation
+      const rect = dockRef.current!.getBoundingClientRect();
       return {
-        //x: x.get() + (20 - rect.left),
-        x: 20 - 145, //random constant that works lol
+        x: 20 - 145,
         y: y.get() + (viewport.height / 2 - dockSizes.vertical.height / 2 - rect.top)
       };
     },
@@ -453,7 +451,7 @@ export default function Dock({activeSection}: DockProps) {
 
         onPointerDown={handlePress}
         onPointerUp={() => {
-          if (!isDragging) return;
+          //if (!isDragging) return;
           handleRelease();
         }}
         onPointerLeave={handleRelease}
