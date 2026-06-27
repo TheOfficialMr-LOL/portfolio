@@ -200,7 +200,17 @@ export default function Dock({activeSection}: DockProps) {
       upDistance = rect.top;
       downDistance = viewport.height - rect.bottom;
     }
-    
+
+
+    //calculate closest distance  
+    const distances: Record<Position, number> = {
+      Left: leftDistance,
+      Right: rightDistance,
+      Up: upDistance,
+      Down: downDistance
+    };
+    const closest = Object.entries(distances).sort((a, b) => a[1] - b[1])[0];
+    console.log(distances);
 
     const animateDock = (target: SnapPosition) => {
       animate(x, target.x, {
@@ -214,43 +224,19 @@ export default function Dock({activeSection}: DockProps) {
         damping,
       });
     };
-        
-    //right snap
-    if (rightDistance < snapLockDistance) {
-      setDockPosition("Right");
-      const target = snapPositions.Right()
-      animateDock(target)
-      setPreviewPosition(null);
-      return;
-    }
 
-    //left snap
-    if (leftDistance < snapLockDistance) {
-      setDockPosition("Left");
-      const target = snapPositions.Left();
+    //animate dock to snap to new position
+    if (closest[1] < snapLockDistance) {
+      setDockPosition(closest[0] as Position);
+      const target = closest[0] === "Right" ? snapPositions.Right() :
+                      closest[0] === "Left" ? snapPositions.Left() : 
+                      closest[0] === "Up" ? snapPositions.Up() :
+                      snapPositions.Down();
+      
       animateDock(target);
       setPreviewPosition(null);
       return;
     }
-
-    //down snap
-    if (downDistance < snapLockDistance) {
-      setDockPosition("Down");
-      const target = snapPositions.Down();
-      animateDock(target);
-      setPreviewPosition(null);
-      return;
-    }
-
-    //up snap
-    if (upDistance < snapLockDistance) {
-      setDockPosition("Up");
-      const target = snapPositions.Up();
-      animateDock(target);
-      setPreviewPosition(null);
-      return;
-    }
-
 
     //return home
     const home = getHomePosition();
