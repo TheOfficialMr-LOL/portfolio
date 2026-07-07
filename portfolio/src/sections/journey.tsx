@@ -1,12 +1,15 @@
 import experience from "../data/experience";
 import image from "../assets/projects/tictactoe/audioSetting.png";
 
-import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls } from "framer-motion";
+import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import {X} from "lucide-react";
 import "./journey.css";
 
+const Xbutton = motion.create(X);
+
 export default function Journey() {
-	const [openGallery, setOpenGallery] = useState<boolean>(true);
+	const [openGallery, setOpenGallery] = useState<number | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const startX = useRef(0);
@@ -69,8 +72,9 @@ export default function Journey() {
 
 	return (
 		<div>
-			{openGallery && <ProjectImageGallery images={experience[0].images}/>}
-
+			<AnimatePresence>
+				{openGallery !== null && <ProjectImageGallery images={experience[openGallery].images} setOpenGallery={setOpenGallery}/>}
+			</AnimatePresence>
 			<div 	
 				ref={containerRef}
 				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab"}}
@@ -79,11 +83,13 @@ export default function Journey() {
 				onPointerUp={onPointerUp}
 				onPointerLeave={onPointerUp}
 			>
-				{[...experience].reverse().map((experience) => (
+				{[...experience].reverse().map((exp, key) => (
 					<ProjectCard 
-						key={experience.title}
-						experience={experience}
+						key={exp.title}
+						experience={exp}
 						onExplode={cancelInertia}
+						setOpenGallery={setOpenGallery}
+						ID={(experience.length - 1) - key}
 					/>
 				))}
 				<br/>
@@ -95,7 +101,7 @@ export default function Journey() {
 
 
 
-function ProjectCard({experience, onExplode}: any) {
+function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 	const [pressed, setPressed] = useState<boolean>(false);
 	const [hovered, setHovered] = useState<boolean>(false);
 
@@ -106,6 +112,8 @@ function ProjectCard({experience, onExplode}: any) {
 	useEffect(() => {
 		if (isExploding) {
 			onExplode?.();
+			const timer = setTimeout(() => {setOpenGallery(ID)}, 250);
+			return () => clearTimeout(timer);
 		}
 	}, [isExploding, onExplode]);
 
@@ -207,11 +215,11 @@ function ProjectCard({experience, onExplode}: any) {
 									type: "spring",
 									stiffness: 180,
 									damping: 40,
-									delay: i * 0.04,
+									delay: i*0.04,
 								}}
 
 								onAnimationComplete={() => {
-									setPhase("gallery");
+									setPhase("stack");
 									setPressed(false);
 								}}
 							/>
@@ -225,7 +233,7 @@ function ProjectCard({experience, onExplode}: any) {
 
 
 
-function ProjectImageGallery({ images }: any) {
+function ProjectImageGallery({ images, setOpenGallery }: any) {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [uiDragging, setUiDragging] = useState(false);
@@ -282,7 +290,7 @@ function ProjectImageGallery({ images }: any) {
 
 		const firstCenter = first.offsetLeft + first.offsetWidth / 2;
 		const lastCenter = last.offsetLeft + last.offsetWidth / 2;
-
+		
 		const maxX = containerCenter - firstCenter;
 		const minX = containerCenter - lastCenter;
 
@@ -293,11 +301,7 @@ function ProjectImageGallery({ images }: any) {
 		if (!imageRefs.current.length)
 			return;
 
-		imagePositions.current =
-			imageRefs.current.map(item =>
-				item.offsetLeft +
-				item.offsetWidth / 2
-			);
+		imagePositions.current = imageRefs.current.map(item => item.offsetLeft + item.offsetWidth / 2);
 	};
 
 	const onPointerDown = (e: React.PointerEvent) => {
@@ -427,7 +431,7 @@ function ProjectImageGallery({ images }: any) {
 	useMotionValueEvent(x, "change", updateCenterEffect);
 
 	return (
-		<div
+		<motion.div
 			ref={containerRef}
 			onPointerDown={onPointerDown}
 			onPointerMove={onPointerMove}
@@ -439,7 +443,31 @@ function ProjectImageGallery({ images }: any) {
 				userSelect: "none",
 				WebkitUserSelect: "none",
 			}}
+
+			initial={{
+				opacity: 0,
+				backdropFilter: "blur(0px)",
+			}}
+			animate={{
+				opacity: 1,
+				backdropFilter: "blur(10px)",
+			}}
+			exit={{
+				opacity: 0,
+				backdropFilter: "blur(0px)",
+			}}
+			transition={{
+				duration: 0.35,
+				ease: "easeOut",
+			}}
 		>
+			<Xbutton
+				whileHover={{ scale: 1.5 }}
+				transition={{ type: "spring", stiffness: 400, damping: 20 }}
+				size={40} 
+				style={{position: "absolute", color: "#fff", right: 0, padding: "10px", cursor: "pointer"}}
+				onPointerDown={() => setOpenGallery(null)}
+			/>
 			<motion.div
 				style={{
 					...styles.imageContainer,
@@ -483,7 +511,7 @@ function ProjectImageGallery({ images }: any) {
 				))}
 			</motion.div>
 			<SemiCircleProgress current={activeIndex + 1} total={images.length} />
-		</div>
+		</motion.div>
 	);
 }
 
