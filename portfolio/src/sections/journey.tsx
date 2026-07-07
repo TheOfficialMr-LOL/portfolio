@@ -261,9 +261,11 @@ function ProjectImageGallery({ images, setOpenGallery }: any) {
 
 	useEffect(() => {
 		const handleResize = () => {
-			cacheImagePositions();
-			snapToClosest();
 			setWidth(window.visualViewport?.width ?? window.innerWidth);
+			requestAnimationFrame(() => {
+				cacheImagePositions();
+				snapToClosest();
+			});
 		};
 
 		requestAnimationFrame(() => {
@@ -517,17 +519,15 @@ function ProjectImageGallery({ images, setOpenGallery }: any) {
 
 
 function SemiCircleProgress({current, total}: {current: number, total: number}) {
-  const progress = current / total * 100;
+  const progress = current / total;
 
   const radius = 80;
-  const circumference = Math.PI * radius; // half circle circumference
+  const circumference = Math.PI * radius; //semi circle circumference
 
-  const offset = circumference - (progress / 100) * circumference;
+  const offset = circumference - (progress) * circumference;
 
   return (
-    <div>
-			<br/>
-			<br/>
+    <div style={{position: "absolute", bottom: "clamp(15px, 15vh, 100px)", left: "50%", transform: "translateX(-50%)",}}>
       <svg width="220" height="120" viewBox="0 0 220 120">
         {/*background arc*/}
         <path
