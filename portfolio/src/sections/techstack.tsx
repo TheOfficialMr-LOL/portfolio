@@ -193,5 +193,4 @@ const styles: { [key: string]: React.CSSProperties } = {
 		display: "inline-flex", 
 		gap: "10px",
 	},
-	
 }

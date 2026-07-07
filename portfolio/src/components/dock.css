@@ -30,3 +30,14 @@
   transform: scale(1.2);
   background: rgba(255, 255, 255, 0.18);
 }
+
+
+@keyframes shimmer {
+	0% {
+		background-position: 200% 0%;
+	}
+
+	100% {
+		background-position: -200% 0%;
+	}
+}

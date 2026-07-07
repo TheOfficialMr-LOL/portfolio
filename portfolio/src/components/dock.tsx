@@ -465,6 +465,7 @@ export default function Dock({activeSection}: DockProps) {
             "My Journey"
           )}
         </button>
+        <div style={styles.glassShimmer}/>
       </motion.div>
     </div>
   );
@@ -513,6 +514,28 @@ const styles: { [key: string]: React.CSSProperties } = {
     pointerEvents: "none",
     borderRadius: "24px",
   },
+  glassShimmer: {
+		position: "absolute",
+		inset: 0,
+
+		borderRadius: "20px",
+
+		zIndex: 5,
+		pointerEvents: "none",
+
+		background: `
+			linear-gradient(
+				120deg,
+				transparent 30%,
+				rgba(255, 255, 255, 0.52) 50%,
+				transparent 70%
+			)
+		`,
+
+		backgroundSize: "200% 200%",
+		animation: "shimmer 6s infinite",
+		mixBlendMode: "overlay",
+	},
 };
 
 

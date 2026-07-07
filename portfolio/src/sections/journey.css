@@ -1,0 +1,50 @@
+.imageStack {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+
+.imageStack img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  position: relative;
+  z-index: 3;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* fake layers */
+.imageStack::before,
+.imageStack::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: inherit;
+  background-image: url("../assets/LOL-img.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  opacity: 0.25;
+  filter: blur(2px);
+}
+
+.imageStack::before {
+  transform: translateY(12px) scale(0.97);
+}
+
+.imageStack::after {
+  transform: translateY(24px) scale(0.94);
+}
+
+
+@keyframes shimmer {
+	0% {
+		background-position: 200% 0%;
+	}
+
+	100% {
+		background-position: -200% 0%;
+	}
+}
