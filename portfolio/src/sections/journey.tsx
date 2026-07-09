@@ -246,6 +246,15 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 	const [width, setWidth] = useState<number>(window.visualViewport?.width ?? window.innerWidth)
 	const imageWidth = Math.min(width*0.9, 550)
 
+	//scaling calculations for the progress semi circle
+	const imageHeight = isAboutKomito ? window.innerHeight * 0.7 : imageWidth * 4 / 5;
+	const availableHeight = window.innerHeight - imageHeight - 140;
+	const progressScale = Math.max(
+    0.5, //never smaller than 50%
+    Math.min(1, availableHeight / 120)
+);
+
+
 	const imageRefs = useRef<HTMLDivElement[]>([]);
 	const imagePositions = useRef<number[]>([]);
 	const pointerStartX = useRef(0);
@@ -260,6 +269,18 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 
 	const [activeIndex, setActiveIndex] = useState(0);
 	const activeIndexRef = useRef(0);
+
+	const activeImage = imageRefs.current[activeIndex];
+
+	if (activeImage) {
+			const imageRect = activeImage.getBoundingClientRect();
+			const availableHeight = window.innerHeight - imageRect.bottom - 20;
+
+			const progressScale = Math.max(
+				0.5,
+				Math.min(1, availableHeight / 120)
+			);
+	}
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -500,7 +521,8 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 							draggable={false}
 							style={{
 								display: "block",
-								width: `${imageWidth}px`,
+								width: isAboutKomito ? "auto" : `${imageWidth}px`,
+								height: isAboutKomito ? "70vh" : "auto",
 								aspectRatio: isAboutKomito ? "215/440" : "5/4",
 								objectFit: "cover",
 								borderRadius: "25px",
@@ -520,13 +542,13 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 					</div>
 				))}
 			</motion.div>
-			<SemiCircleProgress current={activeIndex + 1} total={images.length} />
+			<SemiCircleProgress current={activeIndex + 1} total={images.length} scale={progressScale}/>
 		</motion.div>
 	);
 }
 
 
-function SemiCircleProgress({current, total}: {current: number, total: number}) {
+function SemiCircleProgress({current, total, scale}: {current: number, total: number, scale: number}) {
   const progress = current / total;
 
   const radius = 80;
@@ -535,8 +557,8 @@ function SemiCircleProgress({current, total}: {current: number, total: number}) 
   const offset = circumference - (progress) * circumference;
 
   return (
-    <div style={{position: "absolute", bottom: "clamp(15px, 15vh, 100px)", left: "50%", transform: "translateX(-50%)",}}>
-      <svg width="220" height="120" viewBox="0 0 220 120">
+    <div style={{position: "relative", top: scale < 1 ? "-20px" :  "20px", left: "50%", transform: `translateX(-50%) scale(${scale})`}}>
+      <svg width="220" height="120" viewBox="10 15 180 90">
         {/*background arc*/}
         <path
           d="M 20 100 A 80 80 0 0 1 180 100"
