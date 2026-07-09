@@ -436,10 +436,7 @@ export default function Dock({activeSection}: DockProps) {
         }}
 
         onPointerDown={handlePress}
-        onPointerUp={() => {
-          //if (!isDragging) return;
-          handleRelease();
-        }}
+        onPointerUp={() => {handleRelease()}}
         onPointerLeave={handleRelease}
       >
         <motion.button className={`icon ${activeSection === "Profile" ? "active" : ""} noSelect`} onClick={() => scrollToSection("Profile")} style={{transform: dockOnVerticalAxis ? "rotate(270deg)":""}}>

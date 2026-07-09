@@ -73,7 +73,7 @@ export default function Journey() {
 	return (
 		<div>
 			<AnimatePresence>
-				{openGallery !== null && <ProjectImageGallery images={experience[openGallery].images} setOpenGallery={setOpenGallery}/>}
+				{openGallery !== null && <ProjectImageGallery images={experience[openGallery].images} setOpenGallery={setOpenGallery} title={experience[openGallery].title}/>}
 			</AnimatePresence>
 			<div 	
 				ref={containerRef}
@@ -233,7 +233,9 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 
 
 
-function ProjectImageGallery({ images, setOpenGallery }: any) {
+function ProjectImageGallery({ images, setOpenGallery, title }: any) {
+
+	const isAboutKomito = title.includes("Komito");
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [uiDragging, setUiDragging] = useState(false);
@@ -499,14 +501,20 @@ function ProjectImageGallery({ images, setOpenGallery }: any) {
 							style={{
 								display: "block",
 								width: `${imageWidth}px`,
-								aspectRatio: "5/4",
+								aspectRatio: isAboutKomito ? "215/440" : "5/4",
 								objectFit: "cover",
 								borderRadius: "25px",
 								pointerEvents: "none",
 								boxShadow: "0 10px 30px rgba(0,0,0,0.25)",
 								willChange: "transform",
 							}}
-							animate={{scale: activeIndex === i ? 1 : 0.6}}
+							initial={{
+								opacity: 1,
+								scale: 0.1,
+								y: -500,
+								x: -500,
+							}}
+							animate={{scale: activeIndex === i ? 1 : 0.6, opacity: 1, y: 0, x: 0}}
 							transition={{duration: 0.3, ease: "easeInOut"}}
 						/>
 					</div>
@@ -637,7 +645,6 @@ const styles: { [key: string]: React.CSSProperties } = {
 		objectFit: "cover",
 		borderRadius: "20px",
 		zIndex: 3,
-		//border: "1px solid rgba(255,255,255,0.7)",
 		boxShadow: `
 			0 10px 20px rgba(0,0,0,0.18),
 			inset 0 1px 2px rgba(255,255,255,0.5)
@@ -685,11 +692,6 @@ const styles: { [key: string]: React.CSSProperties } = {
 				rgba(255,255,255,0)
 			)
 		`,
-
-		//boxShadow: `
-		//	inset 0 1px 2px rgba(255,255,255,0.8),
-		//	inset 0 -20px 40px rgba(0,0,0,0.12)
-		//`,
 
 		border: "1px solid rgba(255,255,255,0.45)",
 	},

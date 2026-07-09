@@ -1,4 +1,9 @@
 import tictactoeImages from "../assets/projects/tictactoe";
+import minesweeperImages from "../assets/projects/minesweeper";
+import cansatImages from "../assets/projects/cansat";
+import connect4Images from "../assets/projects/connect4";
+import komitoImages from "../assets/projects/KomitoApp";
+
 import ticTacToeCover from "../assets/projects/tictactoe/localGame.png";
 import minesweeperCover from "../assets/projects/minesweeper/coverImage.png";
 import cansatCoverImage from "../assets/projects/cansat/coverImage.png";
@@ -39,6 +44,7 @@ const experience = [
         "Implemented an efficient board generation algorithm that guarantees the player's first move never lands on a mine.",
         "Successfully deployed the application to the cloud using Microsoft Azure."
     ],
+    "images": minesweeperImages,
     "coverImage": minesweeperCover,
     "overlayColor": "#ffffff"
   },
@@ -54,6 +60,7 @@ const experience = [
 			"Engineered a networking system to receive telemetry from the airborne CanSat and distribute the live data across multiple Wi-Fi supported devices, allowing real-time access to sensor data.",
 			"Developed a MicroPython-based backend server for the Raspberry Pi Pico W ground station, capable of handling multiple concurrent client requests with minimal latency."
     ],
+    "images": cansatImages,
     "coverImage": cansatCoverImage,
     "overlayColor": "#3c5463",
     "borderColor": "#8a98a0"
@@ -72,6 +79,7 @@ const experience = [
 			"Developed an online multiplayer system that allows players to create and join private game sessions via a shareable link using NodeJS and WebSockets.",
 			"Designed a seamless reconnection system that allows players to rejoin active games after network disruptions within a five-minute grace period."
 		],
+        "images": connect4Images,
         "coverImage": connect4CoverImage,
         "overlayColor": "#ffffff"
 	},
@@ -93,6 +101,7 @@ const experience = [
 			"Leveraged Expo's production pipeline to push over-the-air (OTA) updates without requiring user to update the app.",
 			"Focused heavily on user-friendly layout and easy-of-use design."
 		],
+        "images": komitoImages,
         "coverImage": komitoAppCoverImage,
         "overlayColor": "#fff"
 	}
