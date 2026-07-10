@@ -26,7 +26,8 @@ const experience = [
 		],
         "images": tictactoeImages,
         "coverImage": ticTacToeCover,
-        "overlayColor": "#ffffff"  
+        "overlayColor": "#ffffff",
+		"link": "https://tictactoe-unbeatable.azurewebsites.net/"  
   },
   {
     "company": "Personal Project",
@@ -46,7 +47,8 @@ const experience = [
     ],
     "images": minesweeperImages,
     "coverImage": minesweeperCover,
-    "overlayColor": "#ffffff"
+    "overlayColor": "#ffffff",
+	"link": "https://minemania.azurewebsites.net/"
   },
 	{
     "company": "CanSat Competition",
@@ -55,15 +57,15 @@ const experience = [
     "end": "Mar 2025",
     "title": "Sensor Data Visualization Tool",
     "description": [
-			"Collaborated as a seven-person engineering team to develop a CanSat system for measuring the NDVI (Normalized Difference Vegetation Index) of plants from an aerial view.",
-			"Developed a custom full-stack dashboard from scratch, designed to render sensor data (such as pressure, altitude, temperature, velocity, acceleration, and time) graphically in real-time using traditional HTML, CSS, and Javascript.",
-			"Engineered a networking system to receive telemetry from the airborne CanSat and distribute the live data across multiple Wi-Fi supported devices, allowing real-time access to sensor data.",
-			"Developed a MicroPython-based backend server for the Raspberry Pi Pico W ground station, capable of handling multiple concurrent client requests with minimal latency."
+		"Collaborated as a seven-person engineering team to develop a CanSat system for measuring the NDVI (Normalized Difference Vegetation Index) of plants from an aerial view.",
+		"Developed a custom full-stack dashboard from scratch, designed to render sensor data (such as pressure, altitude, temperature, velocity, acceleration, and time) graphically in real-time using traditional HTML, CSS, and Javascript.",
+		"Engineered a networking system to receive telemetry from the airborne CanSat and distribute the live data across multiple Wi-Fi supported devices, allowing real-time access to sensor data.",
+		"Developed a MicroPython-based backend server for the Raspberry Pi Pico W ground station, capable of handling multiple concurrent client requests with minimal latency."
     ],
     "images": cansatImages,
     "coverImage": cansatCoverImage,
     "overlayColor": "#3c5463",
-    "borderColor": "#8a98a0"
+    "borderColor": "#8a98a0",
   },
 	{
 		"company": "Personal Project",
@@ -81,7 +83,8 @@ const experience = [
 		],
         "images": connect4Images,
         "coverImage": connect4CoverImage,
-        "overlayColor": "#ffffff"
+        "overlayColor": "#ffffff",
+		"link": "https://connect4-arena.azurewebsites.net/"
 	},
 	{
 		"company": "Freelance",

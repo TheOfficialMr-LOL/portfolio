@@ -99,7 +99,7 @@ export default function TechStack() {
 										animationIndex++;
 
 										return (
-										<PressableCard hoverScale={1.1}>
+										<PressableCard hoverScale={1.1} key={animationIndex}>
 											<motion.div
 												key={tech.name}
 												initial={{ x: 600, opacity: 0, y: -200 }}
@@ -180,8 +180,8 @@ const styles: { [key: string]: React.CSSProperties } = {
 		height: "40px",
 		marginLeft: "-20px",
 		fontWeight: "700",
-
-		backgroundColor: "#5850c0",
+		
+		background: "linear-gradient(135deg, #713ec9 0%, #555bcc 45%, #7b61ff 100%)",
 		backdropFilter: "blur(10px)",
 		borderBottom: "1px solid #8fb4e194",
 		

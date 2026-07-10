@@ -169,7 +169,8 @@ const styles: { [key: string]: React.CSSProperties } = {
 		lineHeight: "1.6"
 	},
 	aboutMeHeader: {
-		backgroundColor: "#5850c0",
+		background: "linear-gradient(135deg, #713ec9 0%, #555bcc 45%, #7b61ff 100%)",
+		backdropFilter: "blur(10px)",
 		color: "#fff",
 		fontSize: "28px",
 		padding: "10px 20px",

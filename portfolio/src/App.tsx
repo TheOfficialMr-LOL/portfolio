@@ -40,6 +40,7 @@ function App() {
       <section id="Techstack"><TechStack/></section>
       <br/><br/>
       <section id="Journey"><Journey/></section>
+      <br/><br/>
     </div>
   );
 }

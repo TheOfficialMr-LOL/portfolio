@@ -1,10 +1,13 @@
-import { useMotionValue, animate, motion } from "framer-motion";
+import { useMotionValue, animate, motion, type MotionStyle  } from "framer-motion";
 import type { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
   hoverScale?: number;
   isMobile?: boolean;
+  style?:  MotionStyle;
+  onPress?: any;
+  "data-clickable"?: boolean;
 };
 
 function usePopOut(isMobile: boolean) {
@@ -29,29 +32,36 @@ function usePopOut(isMobile: boolean) {
   return { scale, press, release };
 }
 
-export function PressableCard({ children, hoverScale, isMobile = false }: Props) {
+export function PressableCard({ children, hoverScale, isMobile = false, style, onPress }: Props) {
   const { scale, press, release } = usePopOut(isMobile);
 
   return (
     <motion.div
-
-    whileHover={
+    data-clickable
+      whileHover={
         isMobile
           ? {y: 0}
           : {
               scale: hoverScale ?? 1.06,
               y: 0
             }
-      }
-    transition={{
+        }
+      transition={{
         type: "spring",
         stiffness: 400,
         damping: 18,
-    }}
+      }}
 
-    style={{ scale , cursor: "grab"}}
-      onPointerDown={press}
-      onPointerUp={release}
+      style={{ scale , cursor: "grab", ...style}}
+      onPointerDown={(e) => {
+        e.stopPropagation();
+        press();
+      }}
+      onPointerUp={(e) => {
+        e.stopPropagation();
+        release();
+        onPress?.();
+      }}
       onPointerLeave={release}
     >
       {children}

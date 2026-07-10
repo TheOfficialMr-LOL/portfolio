@@ -3,8 +3,10 @@ import image from "../assets/projects/tictactoe/audioSetting.png";
 
 import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import {X} from "lucide-react";
+
+import {X, ExternalLink} from "lucide-react";
 import "./journey.css";
+import { PressableCard } from "../animations/popOut";
 
 const Xbutton = motion.create(X);
 
@@ -21,18 +23,25 @@ export default function Journey() {
 	const animation = useRef<number | null>(null);
 
 	const onPointerDown = (e: React.PointerEvent) => {
-		if (!containerRef.current) return;
+    if (!containerRef.current) return;
 
-		setIsDragging(true);
-		containerRef.current.setPointerCapture(e.pointerId);
-		startX.current = e.clientX;
-		lastX.current = e.clientX;
-		scrollStart.current = containerRef.current.scrollLeft;
-		velocity.current = 0;
+    const target = e.target as HTMLElement;
 
-		if (animation.current) {
-			cancelAnimationFrame(animation.current);
-		}
+    if (target.closest("button") || target.closest("[data-clickable]")) {
+        return;
+    }
+
+    setIsDragging(true);
+    containerRef.current.setPointerCapture(e.pointerId);
+
+    startX.current = e.clientX;
+    lastX.current = e.clientX;
+    scrollStart.current = containerRef.current.scrollLeft;
+    velocity.current = 0;
+
+    if (animation.current) {
+        cancelAnimationFrame(animation.current);
+    }
 	};
 
 
@@ -56,7 +65,7 @@ export default function Journey() {
 	const inertia = () => {
 		if (!containerRef.current) return;
 
-		velocity.current *= 0.98; //drag friction
+		velocity.current *= 0.95; //drag friction
 		containerRef.current.scrollLeft -= velocity.current;
 		if (Math.abs(velocity.current) > 0.5) {
 			animation.current = requestAnimationFrame(inertia);
@@ -102,6 +111,9 @@ export default function Journey() {
 
 
 function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
+	const isKomito = experience.title.includes("Komito");
+	const isCansat = experience.title.includes("Sensor");
+
 	const [pressed, setPressed] = useState<boolean>(false);
 	const [hovered, setHovered] = useState<boolean>(false);
 
@@ -118,6 +130,15 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 	}, [isExploding, onExplode]);
 
 
+	//preload images for performance
+	useEffect(() => {
+		experience.images?.forEach((src: string) => {
+			const img = new Image();
+			img.src = src;
+			img.decode?.();
+		});
+	}, []);
+
 	return (
 		<div style={styles.card}>
 			{/*Header*/}
@@ -129,10 +150,11 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 			<p style={{fontWeight: "600", fontSize: "18px", marginTop: "-10px"}}>{experience.role}</p>
 			<p style={{fontWeight: "400", fontSize: "16px", textAlign: "center", marginLeft: "-4%"}}>{experience.title}</p>
 
-	
+
+			{/*image stack*/}
 			<motion.div 
 				ref={stackRef}
-				style={styles.imageStack}
+				style={{...styles.imageStack, willChange: "transform"}}
 				onPointerDown={(e) => {e.stopPropagation();!isExploding ? setPressed(true) : null}}
 				onPointerUp={(e) => {e.stopPropagation();setPressed(false); setPhase("exploding");}}
 				onPointerEnter={() => {!isExploding ? setHovered(true) : null}}
@@ -146,18 +168,9 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 				whileTap="pressed"
 				animate={pressed ? "pressed" : hovered ? "hover" : "idle"}
 				variants={{
-					idle: {
-							x: 0,
-							scale: 1,
-					},
-					hover: {
-							x: -25,
-							scale: 1.05,
-					},
-					pressed: {
-							x: 0,
-							scale: 0.8,
-					}
+					idle: {x: 0, scale: 1},
+					hover: {x: -25, scale: 1.05},
+					pressed: {x: 0, scale: 0.8}
 				}}
 				transition={{
 						type: "spring",
@@ -178,13 +191,13 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 					<img src={experience.coverImage ?? image} style={styles.backgroundImage}/>
 				</div>
 
-				{(phase === "exploding" && experience.images) && experience.images.map((src: string, i: number) => {
+				{/*(phase === "exploding" && experience.images) &&*/ experience.images.map((src: string, i: number) => {
 					const angle = (-150 + (120 * i) / (experience.images.length - 1)) * (Math.PI / 180);
 					//-150 to 30 degrees in radians
-					const distance = 1000;
+					const distance = 700;
 
 					return (
-						<div style={{}}>
+						<div>
 							<motion.img
 								key={i}
 								src={src}
@@ -196,6 +209,8 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 									objectFit: "cover",
 									borderRadius: 20,
 									zIndex: 200,
+									pointerEvents: "none",
+									display: isExploding ? "block" : "none"
 								}}
 								initial={{
 									x: 0,
@@ -203,30 +218,63 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 									scale: 0.9,
 									opacity: 1,
 								}}
-								animate={{
-									x: Math.cos(angle) * distance,
-									y: Math.sin(angle) * distance,
-									rotate: (Math.random() - 0.5) * 20,
-									opacity: 1,
-									scale: 1,
+								animate={
+									phase === "exploding"
+									? {
+										x: Math.cos(angle) * distance,
+										y: Math.sin(angle) * distance,
+										rotate: 10,
+										opacity: 1,
+										scale: 1,
+									}
+									: {
+										x: 0,
+										y: 0,
+										scale: 0.9,
 								}}
 
 								transition={{
 									type: "spring",
-									stiffness: 180,
-									damping: 40,
+									stiffness: 500,
+									damping: 50,
 									delay: i*0.04,
 								}}
 
 								onAnimationComplete={() => {
 									setPhase("stack");
 									setPressed(false);
+									setHovered(false);
 								}}
 							/>
 						</div>
 					);
 				})}
 			</motion.div>
+
+			{/*Buttons*/}
+			<div style={{display: "inline-flex", flexDirection: "row", gap: "clamp(20px, 5vw, 70px)", justifyContent: "center", marginTop: "auto", paddingBottom: 30, paddingLeft: 10, paddingRight: 10, position: "relative"}}>
+				<PressableCard style={styles.cardButton}>Read More</PressableCard>
+
+				<PressableCard 
+					style={{...styles.cardButton}}
+					data-clickable
+					onPress={() => {
+						if (isKomito) {
+							//not decided
+						} else if (isCansat) {
+								setOpenGallery(2);
+						} else {
+								window.open(experience.link, "_blank");
+						}
+						return;
+				}}
+				>	
+					<div style={{display: "flex", justifyContent: "center", flexDirection: "row", paddingLeft: "5px", paddingRight: "5px"}}>
+						<span style={{fontSize: "clamp(16px, 5vw, 20px)", whiteSpace: "nowrap"}}>{isKomito?"Video Demo":isCansat?"View Gallery":"Live Demo"}</span>
+						<ExternalLink style={{marginLeft: "10px"}} strokeWidth={3}/>
+					</div>
+				</PressableCard>
+			</div>
 		</div>
 	);
 }
@@ -270,18 +318,7 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const activeIndexRef = useRef(0);
 
-	const activeImage = imageRefs.current[activeIndex];
-
-	if (activeImage) {
-			const imageRect = activeImage.getBoundingClientRect();
-			const availableHeight = window.innerHeight - imageRect.bottom - 20;
-
-			const progressScale = Math.max(
-				0.5,
-				Math.min(1, availableHeight / 120)
-			);
-	}
-
+	
 	useEffect(() => {
 		const handleResize = () => {
 			setWidth(window.visualViewport?.width ?? window.innerWidth);
@@ -620,7 +657,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 	card: {
 		textAlign: "left",
 		fontWeight: "500",
-		backgroundColor: "aliceblue",
+		backgroundColor: "#fff",
 		borderRadius: "12px",
 		boxShadow: "0 10px 30px rgba(0,0,0,0.1), 0 1px 1px rgba(255,255,255,0.05) inset",
 
@@ -639,6 +676,28 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 		boxSizing: "border-box",
 	},
+	cardButton: {
+		height: "80px",
+		width: "100%",
+		color: "#fff",
+		fontSize: "20px",
+		fontWeight: "bold",
+
+		background: "linear-gradient(135deg, #7b61ff 0%, #555bcc 45%, #713ec9 100%)",
+
+		border: "1px solid rgba(255,255,255,0.35)",
+		borderRadius: "20px",
+
+		boxShadow: `
+			0 10px 30px rgba(88,80,192,0.35),
+			inset 0 1px 1px rgba(255,255,255,0.3)
+		`,
+
+		backdropFilter: "blur(10px)",
+		cursor: "pointer",
+		alignContent: "center",
+		textAlign: "center",
+	},
 	imageStack: {
 		position: "relative",
 		width: "60%",
@@ -654,9 +713,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 		inset: 0,
 		borderRadius: "20px",
 		background: "rgba(131, 173, 255, 0.5)",
-		backdropFilter: "blur(12px)",
+		//backdropFilter: "blur(0px)",
 		boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
 		border: "2px solid rgba(255,255,255)",
+		willChange: "transform",
 	},
 	backgroundImage: {
 		position: "absolute",
@@ -759,4 +819,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 		scrollbarWidth: "none",
 		userSelect: "none",
 	},
+	externalLinkIcon: {
+		width: "20px",
+		height: "20px",
+		position: "relative",
+		marginLeft: "auto"
+	}
 };
