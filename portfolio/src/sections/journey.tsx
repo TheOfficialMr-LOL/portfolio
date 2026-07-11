@@ -4,7 +4,7 @@ import image from "../assets/projects/tictactoe/audioSetting.png";
 import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-import {X, ExternalLink} from "lucide-react";
+import {X, ExternalLink, Images, SquarePlay } from "lucide-react";
 import "./journey.css";
 import { PressableCard } from "../animations/popOut";
 
@@ -271,7 +271,15 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 				>	
 					<div style={{display: "flex", justifyContent: "center", flexDirection: "row", paddingLeft: "5px", paddingRight: "5px"}}>
 						<span style={{fontSize: "clamp(16px, 5vw, 20px)", whiteSpace: "nowrap"}}>{isKomito?"Video Demo":isCansat?"View Gallery":"Live Demo"}</span>
-						<ExternalLink style={{marginLeft: "10px"}} strokeWidth={3}/>
+						
+						{isKomito ? (
+								<SquarePlay style={{marginLeft: "10px", transform: "translateY(3px)"}} strokeWidth={3}/>
+							) : isCansat ? (
+								<Images style={{marginLeft: "10px", transform: "translateY(2px)"}} strokeWidth={3}/>
+							) : (
+								<ExternalLink style={{marginLeft: "10px", transform: "translateY(1.5px)"}} strokeWidth={3}/>
+							)
+						}
 					</div>
 				</PressableCard>
 			</div>
