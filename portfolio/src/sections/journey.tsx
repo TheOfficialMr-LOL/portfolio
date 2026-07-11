@@ -677,10 +677,10 @@ const styles: { [key: string]: React.CSSProperties } = {
 		boxSizing: "border-box",
 	},
 	cardButton: {
-		height: "80px",
+		height: "70px",
 		width: "100%",
 		color: "#fff",
-		fontSize: "20px",
+		fontSize: "clamp(16px, 5vw, 20px)",
 		fontWeight: "bold",
 
 		background: "linear-gradient(135deg, #7b61ff 0%, #555bcc 45%, #713ec9 100%)",

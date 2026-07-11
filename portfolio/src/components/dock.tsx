@@ -499,7 +499,8 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   preview: {
     background: "rgba(255, 255, 255, 0.4)",
-    zIndex: 51
+    zIndex: 51,
+    willChange: "transform"
   },
   dockPreviewPlaceholder: {
     position: "fixed",
@@ -510,6 +511,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     backdropFilter: "blur(20px)",
     pointerEvents: "none",
     borderRadius: "24px",
+    willChange: "transform"
   },
   glassShimmer: {
 		position: "absolute",
