@@ -4,7 +4,7 @@ import image from "../assets/projects/tictactoe/audioSetting.png";
 import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-import {X, ExternalLink, Images, SquarePlay } from "lucide-react";
+import {X, ExternalLink, Images, SquarePlay, Cross } from "lucide-react";
 import "./journey.css";
 import { PressableCard } from "../animations/popOut";
 
@@ -250,6 +250,26 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 					);
 				})}
 			</motion.div>
+
+			{/*project description*/}
+			<svg width="0" height="0">
+				<defs>
+					<linearGradient id="crossGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+						<stop offset="0%" stopColor="#7b61ff" />
+						<stop offset="45%" stopColor="#555bcc" />
+						<stop offset="100%" stopColor="#713ec9" />
+					</linearGradient>
+				</defs>
+			</svg>
+				
+			<ul style={styles.projectDescription}>
+				{experience.description.map((statement: string) => (
+					<li key={statement} style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginBottom: "14px"}}>
+						<Cross stroke="url(#iconGradient)" fill="url(#crossGradient)" size={14} strokeWidth={3}  style={{ flexShrink: 0, marginTop: "3px"}}/>
+						<span style={{lineHeight: 1.3}}>{statement}</span>
+					</li>
+				))}
+			</ul>
 
 			{/*Buttons*/}
 			<div style={{display: "inline-flex", flexDirection: "row", gap: "clamp(20px, 5vw, 70px)", justifyContent: "center", marginTop: "auto", paddingBottom: 30, paddingLeft: 10, paddingRight: 10, position: "relative"}}>
@@ -832,5 +852,16 @@ const styles: { [key: string]: React.CSSProperties } = {
 		height: "20px",
 		position: "relative",
 		marginLeft: "auto"
-	}
+	},
+	projectDescription: {
+		backgroundColor: "#ffffff", 
+		height: "100%", 
+		overflow: "hidden", 
+		fontSize: "14px", 
+		paddingLeft: 0, 
+		listStyle: "none", 
+		marginTop: "40px",
+		WebkitMaskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+    maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)",
+	},
 };
