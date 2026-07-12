@@ -56,9 +56,14 @@ export default function Journey() {
 
 
 	const onPointerUp = (e: React.PointerEvent) => {
+		if (!containerRef.current) return;
+
 		setIsDragging(false);
 
-		containerRef.current?.releasePointerCapture(e.pointerId);
+		if (containerRef.current.hasPointerCapture(e.pointerId)) {
+			containerRef.current.releasePointerCapture(e.pointerId);
+		}
+
 		inertia();
 	};
 
@@ -90,7 +95,7 @@ export default function Journey() {
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
-				onPointerLeave={onPointerUp}
+				onPointerCancel={onPointerUp}
 			>
 				{[...experience].reverse().map((exp, key) => (
 					<ProjectCard 
@@ -101,7 +106,6 @@ export default function Journey() {
 						ID={(experience.length - 1) - key}
 					/>
 				))}
-				<br/>
 			</div>
 		</div>
 	);
@@ -241,9 +245,11 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 								}}
 
 								onAnimationComplete={() => {
-									setPhase("stack");
-									setPressed(false);
-									setHovered(false);
+									if (i === experience.images.length - 1) {
+										setPhase("stack");
+										setPressed(false);
+										setHovered(false);
+									}
 								}}
 							/>
 						</div>
@@ -265,7 +271,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 			<ul style={styles.projectDescription}>
 				{experience.description.map((statement: string) => (
 					<li key={statement} style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginBottom: "14px"}}>
-						<Cross stroke="url(#iconGradient)" fill="url(#crossGradient)" size={14} strokeWidth={3}  style={{ flexShrink: 0, marginTop: "3px"}}/>
+						<Cross stroke="url(#crossGradient)" fill="url(#crossGradient)" size={14} strokeWidth={3}  style={{ flexShrink: 0, marginTop: "3px"}}/>
 						<span style={{lineHeight: 1.3}}>{statement}</span>
 					</li>
 				))}
@@ -676,11 +682,15 @@ const styles: { [key: string]: React.CSSProperties } = {
 		display: "flex",
 		flexDirection: "row",
 		gap: "30px",
-		overflowX: "auto",
+		overflowX: "scroll",
+
 		scrollbarWidth: "none",
+		msOverflowStyle: "none",
 
 		userSelect: "none",
-		touchAction: "pan-y",
+		WebkitUserSelect: "none",
+		touchAction: "none",
+		height: "640px",
 	},
 	card: {
 		textAlign: "left",

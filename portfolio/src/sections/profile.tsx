@@ -155,7 +155,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 		maxWidth: "500px", 
 		marginTop: "-100px", 
 		fontWeight: "500", 
-		backgroundColor: "#F0F8FF",
+		backgroundColor: "#fff",
 		borderRadius: "12px",
 		boxShadow: "0 10px 30px rgba(0,0,0,0.1), 0 1px 1px rgba(255,255,255,0.05) inset",
 		display: "flex",
