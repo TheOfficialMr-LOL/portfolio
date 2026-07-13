@@ -3,6 +3,7 @@ import minesweeperImages from "../assets/projects/minesweeper";
 import cansatImages from "../assets/projects/cansat";
 import connect4Images from "../assets/projects/connect4";
 import komitoImages from "../assets/projects/KomitoApp";
+import komitoDemo from "../assets/projects/KomitoApp/Komito Demo.mp4";
 
 import ticTacToeCover from "../assets/projects/tictactoe/localGame.png";
 import minesweeperCover from "../assets/projects/minesweeper/coverImage.png";
@@ -20,7 +21,7 @@ const experience = [
 		"description": [
 			"Researched, designed, and implemented an unbeatable Tic Tac Toe AI (for 3x3 boards) entirely from scratch using Python at age 13 after 300+ game simulations on paper.",
 			"Build a clean web interface using the traditional HTML, CSS, Javascript for the frontend and nodeJS as the backend.",
-			"Successfully deployed the application to the cloud using Microsoft Azure",
+			"Successfully deployed the application to the cloud using Microsoft Azure.",
 			"Uses browser cookies to save player progress like number of played games, games won, and games lost.",
 			"Built support for both local multiplayer and AI gameplay, delivering a smooth user experience."
 		],
@@ -36,8 +37,8 @@ const experience = [
     "end": "Feb 2024",
     "title": "Minesweeper",
     "description": [
-        "Designed and implemented a minesweeper web app from scratch using the traditional HTML, CSS, Javascript, and NodeJS",
-        "Supports all the expected game functionalities",
+        "Designed and implemented a minesweeper web app from scratch using the traditional HTML, CSS, Javascript, and NodeJS.",
+        "Supports all the expected game functionalities.",
         "Built a clean and responsive web interface optimized for both desktop and mobile devices.",
         "Developed features like customizable board sizes and minecounts, allowing players to customize game difficulty with ease.",
         "Designed a custom touch input system to facilitate smooth user interactions with the board on mobile devices.",
@@ -106,6 +107,7 @@ const experience = [
 		],
         "images": komitoImages,
         "coverImage": komitoAppCoverImage,
+		"demoVideo": komitoDemo,
         "overlayColor": "#fff"
 	}
 	

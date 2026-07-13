@@ -12,6 +12,7 @@ const Xbutton = motion.create(X);
 
 export default function Journey() {
 	const [openGallery, setOpenGallery] = useState<number | null>(null);
+	const [openVideoDemo, setOpenVideoDemo] = useState<number | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const startX = useRef(0);
@@ -89,6 +90,11 @@ export default function Journey() {
 			<AnimatePresence>
 				{openGallery !== null && <ProjectImageGallery images={experience[openGallery].images} setOpenGallery={setOpenGallery} title={experience[openGallery].title}/>}
 			</AnimatePresence>
+
+			<AnimatePresence>
+				{openVideoDemo !== null && <VideoDemo video={experience[openVideoDemo].demoVideo} setOpenVideoDemo={setOpenVideoDemo}/>}
+			</AnimatePresence>
+
 			<div 	
 				ref={containerRef}
 				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab"}}
@@ -103,6 +109,7 @@ export default function Journey() {
 						experience={exp}
 						onExplode={cancelInertia}
 						setOpenGallery={setOpenGallery}
+						setOpenVideoDemo={setOpenVideoDemo}
 						ID={(experience.length - 1) - key}
 					/>
 				))}
@@ -114,7 +121,7 @@ export default function Journey() {
 
 
 
-function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
+function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, ID}: any) {
 	const isKomito = experience.title.includes("Komito");
 	const isCansat = experience.title.includes("Sensor");
 
@@ -195,7 +202,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 					<img src={experience.coverImage ?? image} style={styles.backgroundImage}/>
 				</div>
 
-				{/*(phase === "exploding" && experience.images) &&*/ experience.images.map((src: string, i: number) => {
+				{experience.images.map((src: string, i: number) => {
 					const angle = (-150 + (120 * i) / (experience.images.length - 1)) * (Math.PI / 180);
 					//-150 to 30 degrees in radians
 					const distance = 700;
@@ -214,7 +221,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 									borderRadius: 20,
 									zIndex: 200,
 									pointerEvents: "none",
-									display: isExploding ? "block" : "none"
+									display: isExploding ? "block" : "none",
 								}}
 								initial={{
 									x: 0,
@@ -286,7 +293,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 					data-clickable
 					onPress={() => {
 						if (isKomito) {
-							//not decided
+							setOpenVideoDemo(4);
 						} else if (isCansat) {
 								setOpenGallery(2);
 						} else {
@@ -313,6 +320,74 @@ function ProjectCard({experience, onExplode, setOpenGallery, ID}: any) {
 	);
 }
 
+
+function VideoDemo({setOpenVideoDemo, video}: any) {
+	
+	return (
+		<motion.div 
+			style={{...styles.galleryWrapper, display: "flex", justifyContent: "center", alignItems: "center"}}
+			initial={{
+				opacity: 0,
+			}}
+			animate={{
+				opacity: 1,
+				scale: 1,
+			}}
+			exit={{
+				opacity: 0,
+			}}
+			transition={{
+				type: "spring",
+				stiffness: 250,
+				damping: 25,
+			}}
+		>
+			<Xbutton
+				whileHover={{ scale: 1.5 }}
+				transition={{ type: "spring", stiffness: 400, damping: 20 }}
+				size={40} 
+				style={{position: "absolute", color: "#fff", right: 0, padding: "10px", top: 0, cursor: "pointer"}}
+				onPointerDown={() => setOpenVideoDemo(null)}
+			/>
+
+			<motion.video
+				initial={{
+					opacity: 0,
+					scale: 0.1,
+					x: -500,
+					y: -500
+				}}
+				animate={{
+					opacity: 1,
+					scale: 1,
+					x: 0,
+					y: 0,
+				}}
+				exit={{
+					opacity: 0,
+				}}
+				transition={{
+					type: "spring",
+					stiffness: 250,
+					damping: 25,
+				}}
+
+				controls
+				style={{
+					height: "90vh",
+					maxHeight: "90vh",
+					width: "auto",
+					maxWidth: "90vw",
+					borderRadius: "20px",
+					willChange: "transform"
+				}}
+			>
+				<source src={video} type="video/mp4" />
+				Your browser does not support the video tag.
+		</motion.video>
+	</motion.div>
+	);
+}
 
 
 function ProjectImageGallery({ images, setOpenGallery, title }: any) {
@@ -848,6 +923,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 		overflowX: "hidden",
 		overflowY: "hidden",
 		scrollbarWidth: "none",
+		willChange: "transform"
 	},
 	imageContainer: {
 		display: "inline-flex",
