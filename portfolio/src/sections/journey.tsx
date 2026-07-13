@@ -8,11 +8,15 @@ import {X, ExternalLink, Images, SquarePlay, Cross } from "lucide-react";
 import "./journey.css";
 import { PressableCard } from "../animations/popOut";
 
+import "simplebar-react/dist/simplebar.min.css";
+import SimpleBar from "simplebar-react";
+
 const Xbutton = motion.create(X);
 
 export default function Journey() {
 	const [openGallery, setOpenGallery] = useState<number | null>(null);
 	const [openVideoDemo, setOpenVideoDemo] = useState<number | null>(null);
+	const [openExtendedDescription, setOpenExtendedDescription] = useState<number | null>(null);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	const startX = useRef(0);
@@ -95,6 +99,10 @@ export default function Journey() {
 				{openVideoDemo !== null && <VideoDemo video={experience[openVideoDemo].demoVideo} setOpenVideoDemo={setOpenVideoDemo}/>}
 			</AnimatePresence>
 
+			<AnimatePresence>
+				{openExtendedDescription !== null && <ExtendedDescriptionCard experience={experience[openExtendedDescription]} setOpenExtendedDescription={setOpenExtendedDescription}/>}
+			</AnimatePresence>
+
 			<div 	
 				ref={containerRef}
 				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab"}}
@@ -110,6 +118,7 @@ export default function Journey() {
 						onExplode={cancelInertia}
 						setOpenGallery={setOpenGallery}
 						setOpenVideoDemo={setOpenVideoDemo}
+						setOpenExtendedDescription={setOpenExtendedDescription}
 						ID={(experience.length - 1) - key}
 					/>
 				))}
@@ -121,7 +130,7 @@ export default function Journey() {
 
 
 
-function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, ID}: any) {
+function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, setOpenExtendedDescription, ID}: any) {
 	const isKomito = experience.title.includes("Komito");
 	const isCansat = experience.title.includes("Sensor");
 
@@ -286,7 +295,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, I
 
 			{/*Buttons*/}
 			<div style={{display: "inline-flex", flexDirection: "row", gap: "clamp(20px, 5vw, 70px)", justifyContent: "center", marginTop: "auto", paddingBottom: 30, paddingLeft: 10, paddingRight: 10, position: "relative"}}>
-				<PressableCard style={styles.cardButton}>Read More</PressableCard>
+				<PressableCard style={styles.cardButton} onPress={() => setOpenExtendedDescription(ID)}>Read More</PressableCard>
 
 				<PressableCard 
 					style={{...styles.cardButton}}
@@ -317,6 +326,96 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, I
 				</PressableCard>
 			</div>
 		</div>
+	);
+}
+
+
+function ExtendedDescriptionCard({experience, setOpenExtendedDescription}: any) {
+
+	return (
+		<motion.div 
+			style={{...styles.galleryWrapper, display: "flex", justifyContent: "center", alignItems: "center"}}
+			initial={{
+				opacity: 0,
+			}}
+			animate={{
+				opacity: 1,
+				scale: 1,
+			}}
+			exit={{
+				opacity: 0,
+			}}
+			transition={{
+				type: "spring",
+				stiffness: 250,
+				damping: 25,
+			}}
+		>
+			<Xbutton
+				whileHover={{ scale: 1.5 }}
+				transition={{ type: "spring", stiffness: 400, damping: 20 }}
+				size={40} 
+				style={{position: "absolute", color: "#fff", right: 0, padding: "10px", top: 0, cursor: "pointer"}}
+				onPointerDown={() => setOpenExtendedDescription(null)}
+			/>
+
+			<motion.div 
+				style={{...styles.card, height: "90vh", maxWidth: "90vw", marginTop: "30px", overflow: "auto", display: "block", paddingRight: "0", willChange: "transform"}}
+				initial={{
+					scale: 0,
+				}}
+				animate={{
+					scale: 1,
+					x: 0
+				}}
+				exit={{
+					scale: 0,
+				}}
+				transition={{
+					type: "spring",
+					stiffness: 250,
+					damping: 25,
+				}}
+			>
+				<SimpleBar
+					style={{
+						height: "100%",
+						paddingRight: "20px",
+					}}
+					autoHide
+				>
+					
+					{/*Header*/}
+					<div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+						<p style={{fontSize: "14px", color: "#999999"}}>{experience.start} - {experience.end}</p>
+						<p style={{fontSize: "14px", color: "#999999"}}>{experience.company}</p>
+					</div>
+
+					<p style={{fontWeight: "600", fontSize: "18px", marginTop: "-10px"}}>{experience.role}</p>
+					<p style={{fontSize: "16px", fontWeight: "bold"}}>{experience.title}</p>
+
+					{/*project description*/}
+					<svg width="0" height="0">
+						<defs>
+							<linearGradient id="crossGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+								<stop offset="0%" stopColor="#7b61ff" />
+								<stop offset="45%" stopColor="#555bcc" />
+								<stop offset="100%" stopColor="#713ec9" />
+							</linearGradient>
+						</defs>
+					</svg>
+						
+					<ul style={{...styles.projectDescription, WebkitMaskImage: "none",  maskImage: "none", marginTop: "10px"}}>
+						{experience.description.map((statement: string) => (
+							<li key={statement} style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginBottom: "14px"}}>
+								<Cross stroke="url(#crossGradient)" fill="url(#crossGradient)" size={14} strokeWidth={3}  style={{ flexShrink: 0, marginTop: "3px"}}/>
+								<span style={{lineHeight: 1.2, fontSize: "15px"}}>{statement}</span>
+							</li>
+						))}
+					</ul>
+				</SimpleBar>
+			</motion.div>
+		</motion.div>
 	);
 }
 
@@ -352,8 +451,7 @@ function VideoDemo({setOpenVideoDemo, video}: any) {
 
 			<motion.video
 				initial={{
-					opacity: 0,
-					scale: 0.1,
+					scale: 0,
 					x: -500,
 					y: -500
 				}}
@@ -379,7 +477,8 @@ function VideoDemo({setOpenVideoDemo, video}: any) {
 					width: "auto",
 					maxWidth: "90vw",
 					borderRadius: "20px",
-					willChange: "transform"
+					willChange: "transform",
+					marginTop: "30px"
 				}}
 			>
 				<source src={video} type="video/mp4" />
