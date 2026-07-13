@@ -507,7 +507,7 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 	const availableHeight = window.innerHeight - imageHeight - 140;
 	const progressScale = Math.max(
     0.5, //never smaller than 50%
-    Math.min(1, availableHeight / 120)
+    Math.min(1, availableHeight / 150)
 );
 
 
@@ -803,7 +803,7 @@ function SemiCircleProgress({current, total, scale}: {current: number, total: nu
   const offset = circumference - (progress) * circumference;
 
   return (
-    <div style={{position: "relative", top: scale < 1 ? "-20px" :  "20px", left: "50%", transform: `translateX(-50%) scale(${scale})`}}>
+    <div style={{position: "relative", top: scale < 1 ? "0px" :  "20px", left: "50%", transform: `translateX(-50%) scale(${scale})`}}>
       <svg width="220" height="120" viewBox="10 15 180 90">
         {/*background arc*/}
         <path
