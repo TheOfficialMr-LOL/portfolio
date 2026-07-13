@@ -105,7 +105,7 @@ export default function Journey() {
 
 			<div 	
 				ref={containerRef}
-				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab"}}
+				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y"}}
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
@@ -462,7 +462,7 @@ function VideoDemo({setOpenVideoDemo, video}: any) {
 					y: 0,
 				}}
 				exit={{
-					opacity: 0,
+					scale: 0,
 				}}
 				transition={{
 					type: "spring",
@@ -777,11 +777,12 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 							}}
 							initial={{
 								opacity: 1,
-								scale: 0.1,
+								scale: 0,
 								y: -500,
 								x: -500,
 							}}
 							animate={{scale: activeIndex === i ? 1 : 0.6, opacity: 1, y: 0, x: 0}}
+							exit={{scale: 0}}
 							transition={{duration: 0.3, ease: "easeInOut"}}
 						/>
 					</div>
