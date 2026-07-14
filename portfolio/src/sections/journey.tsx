@@ -1,5 +1,6 @@
 import experience from "../data/experience";
 import image from "../assets/projects/tictactoe/audioSetting.png";
+import githubIcon from "../assets/socialLinks/github.png";
 
 import { motion, useMotionValue, useMotionValueEvent, animate, type AnimationPlaybackControls, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
@@ -172,7 +173,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 	}, []);
 
 	return (
-		<div style={{...styles.card, borderTopLeftRadius: ID == 4 ? "0px" : "20px"}}>
+		<div className="noSelect" style={{...styles.card, borderTopLeftRadius: ID == 4 ? "0px" : "20px", position: "relative"}}>
 			{/*Header*/}
 			<div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
 				<p style={{fontSize: "14px", color: "#999999"}}>{experience.start} - {experience.end}</p>
@@ -182,6 +183,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 			<p style={{fontWeight: "600", fontSize: "18px", marginTop: "-10px"}}>{experience.role}</p>
 			<p style={{fontWeight: "400", fontSize: "16px", textAlign: "center", marginLeft: "-4%"}}>{experience.title}</p>
 
+			{!isKomito && <img src={githubIcon} onClick={() => window.open(experience.githubLink, "_blank")} alt="GitHub" style={{position: "absolute", zIndex: "5", width: "30px", height: "30px", marginTop: "60px", marginLeft: "430px", opacity: "0.5", cursor: "pointer"}}/>}
 
 			{/*image stack*/}
 			<motion.div 

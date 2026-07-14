@@ -28,7 +28,8 @@ const experience = [
         "images": tictactoeImages,
         "coverImage": ticTacToeCover,
         "overlayColor": "#ffffff",
-		"link": "https://tictactoe-unbeatable.azurewebsites.net/"  
+		"link": "https://tictactoe-unbeatable.azurewebsites.net/",
+		"githubLink": "https://github.com/TheOfficialMr-LOL/TicTacToe-Unbeatable-Algorithm"  
   },
   {
     "company": "Personal Project",
@@ -49,7 +50,8 @@ const experience = [
     "images": minesweeperImages,
     "coverImage": minesweeperCover,
     "overlayColor": "#ffffff",
-	"link": "https://minemania.azurewebsites.net/"
+	"link": "https://minemania.azurewebsites.net/",
+	"githubLink": "https://github.com/TheOfficialMr-LOL/Minesweeper-Game"
   },
 	{
     "company": "CanSat Competition",
@@ -67,6 +69,7 @@ const experience = [
     "coverImage": cansatCoverImage,
     "overlayColor": "#3c5463",
     "borderColor": "#8a98a0",
+	"githubLink": "https://github.com/TheOfficialMr-LOL/CanSat-Project"
   },
 	{
 		"company": "Personal Project",
@@ -85,7 +88,8 @@ const experience = [
         "images": connect4Images,
         "coverImage": connect4CoverImage,
         "overlayColor": "#ffffff",
-		"link": "https://connect4-arena.azurewebsites.net/"
+		"link": "https://connect4-arena.azurewebsites.net/",
+		"githubLink": "https://github.com/TheOfficialMr-LOL/connect4_unbeatable"
 	},
 	{
 		"company": "Freelance",
@@ -108,7 +112,7 @@ const experience = [
         "images": komitoImages,
         "coverImage": komitoAppCoverImage,
 		"demoVideo": komitoDemo,
-        "overlayColor": "#fff"
+        "overlayColor": "#fff",
 	}
 	
 ]
