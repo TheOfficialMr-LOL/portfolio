@@ -117,7 +117,7 @@ export default function Journey() {
 
 			<div 	
 				ref={containerRef}
-				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "none"}}
+				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y"}}
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
@@ -183,7 +183,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 			<p style={{fontWeight: "600", fontSize: "18px", marginTop: "-10px"}}>{experience.role}</p>
 			<p style={{fontWeight: "400", fontSize: "16px", textAlign: "center", marginLeft: "-4%"}}>{experience.title}</p>
 
-			{!isKomito && <img src={githubIcon} onClick={() => window.open(experience.githubLink, "_blank")} alt="GitHub" style={{position: "absolute", zIndex: "5", width: "30px", height: "30px", marginTop: "60px", marginLeft: "430px", opacity: "0.5", cursor: "pointer"}}/>}
+			{!isKomito && <img src={githubIcon} onClick={() => window.open(experience.githubLink, "_blank")} alt="GitHub" style={{position: "absolute", zIndex: "5", width: "30px", height: "30px", marginTop: "60px", right: "20px", opacity: "0.5", cursor: "pointer"}}/>}
 
 			{/*image stack*/}
 			<motion.div 
@@ -232,7 +232,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 					const distance = 700;
 
 					return (
-						<div>
+						<div key={i}>
 							<motion.img
 								key={i}
 								src={src}

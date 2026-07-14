@@ -99,7 +99,7 @@ export default function TechStack() {
 										animationIndex++;
 
 										return (
-										<PressableCard hoverScale={1.1} key={animationIndex}>
+										<PressableCard hoverScale={1.1} key={tech.name}>
 											<motion.div
 												key={tech.name}
 												initial={{ x: 600, opacity: 0, y: -200 }}
