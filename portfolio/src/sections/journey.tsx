@@ -69,7 +69,7 @@ export default function Journey() {
 	};
 
 
-	const onPointerUp = (e: React.PointerEvent) => {
+	const onPointerUp = () => {
 		if (!containerRef.current) return;
 
 		setIsDragging(false);
@@ -678,7 +678,7 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 			requestAnimationFrame(step);
 	};
 
-	const onPointerUp = (e: React.PointerEvent) => {
+	const onPointerUp = () => {
 		if (!containerRef.current) return;
 
 		setUiDragging(false);
