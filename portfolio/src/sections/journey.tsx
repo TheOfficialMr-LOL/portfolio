@@ -15,6 +15,8 @@ import SimpleBar from "simplebar-react";
 const Xbutton = motion.create(X);
 
 export default function Journey() {
+	const isSafari = /^((?!chrome|crios|android|fxios|edgios).)*safari/i.test(navigator.userAgent);
+
 	const [openGallery, setOpenGallery] = useState<number | null>(null);
 	const [openVideoDemo, setOpenVideoDemo] = useState<number | null>(null);
 	const [openExtendedDescription, setOpenExtendedDescription] = useState<number | null>(null);
@@ -117,7 +119,7 @@ export default function Journey() {
 
 			<div 	
 				ref={containerRef}
-				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y"}}
+				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: isSafari ? "none" : "pan-y"}}
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
