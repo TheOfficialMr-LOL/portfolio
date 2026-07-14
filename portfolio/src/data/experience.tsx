@@ -20,7 +20,7 @@ const experience = [
 		"title": "Unbeatable Tic Tac Toe",
 		"description": [
 			"Researched, designed, and implemented an unbeatable Tic Tac Toe AI (for 3x3 boards) entirely from scratch using Python at age 13 after 300+ game simulations on paper.",
-			"Build a clean web interface using the traditional HTML, CSS, Javascript for the frontend and nodeJS as the backend.",
+			"Built a clean web interface using the traditional HTML, CSS, Javascript for the frontend and NodeJS as the backend.",
 			"Successfully deployed the application to the cloud using Microsoft Azure.",
 			"Uses browser cookies to save player progress like number of played games, games won, and games lost.",
 			"Built support for both local multiplayer and AI gameplay, delivering a smooth user experience."
@@ -41,7 +41,7 @@ const experience = [
         "Designed and implemented a minesweeper web app from scratch using the traditional HTML, CSS, Javascript, and NodeJS.",
         "Supports all the expected game functionalities.",
         "Built a clean and responsive web interface optimized for both desktop and mobile devices.",
-        "Developed features like customizable board sizes and minecounts, allowing players to customize game difficulty with ease.",
+        "Developed features like customizable board sizes and mine-counts, allowing players to customize game difficulty.",
         "Designed a custom touch input system to facilitate smooth user interactions with the board on mobile devices.",
         "Designed a custom recursive cell-revealing algorithm to uncover adjacent empty cells.",
         "Implemented an efficient board generation algorithm that guarantees the player's first move never lands on a mine.",
@@ -79,8 +79,8 @@ const experience = [
 		"title": "Unbeatable Connect 4",
 		"description": [
 			"Developed a near-unbeatable Connect 4 AI from scratch, using bitboards, custom scoring heuristics, and the minimax algorithm with alpha-beta pruning (without relying on any precomputed board states).",
-			"Improves algorithm speed by 50 times after 4 full algorithm re-writes.",
-			"Built a full-stack web application with a clean, responsive user interface and smooth disk-drop animations using traditional HTML, CSS, and Javascript, and depkoyed it to the cloud using Microsoft Azure.",
+			"Improved algorithm speed by 50 times after 4 full algorithm re-writes.",
+			"Built a full-stack web application with a clean, responsive user interface and smooth disk-drop animations using traditional HTML, CSS, and Javascript, and deployed it to the cloud using Microsoft Azure.",
 			"Implemented both local multiplayer and player-vs-computer gameplay modes.",
 			"Developed an online multiplayer system that allows players to create and join private game sessions via a shareable link using NodeJS and WebSockets.",
 			"Designed a seamless reconnection system that allows players to rejoin active games after network disruptions within a five-minute grace period."
@@ -98,15 +98,15 @@ const experience = [
 		"end": "Apr 2026",
 		"title": "Kumon Center Management App | Komito",
 		"description": [
-			"Developed an Android/IOS App Kumon Center Management application called 'Komito', using React Native, NodeJS, and Postgresql.",
+			"Developed an Android/iOS Kumon Center Management app called 'Komito', using React Native, NodeJS, and Postgresql.",
 			"Independently deployed the backend to Microsoft Azure and published the application to both the Apple Store and Google Play Store.",
 			"Designed a secure user authentication system using JSON Web Token (JWT) access and refresh tokens.",
 			"Enabled a feature to allow admins to create and manage student accounts.",
 			"Developed an announcement system that allows admins to broadcast important center updates/news to parents and students.",
 			"Implemented Firebase Cloud Messaging (FCM) push notifications for both foreground and background app states, allowing users to read real-time updates.",
 			"Built a Whatsapp-style real-time messaging system with efficient message synchronization, allowing students to contact and ask tutors questions.",
-			"Optimized application performance using Redux and AsyncStorage for state management and local message caching and offline persistence.",
-			"Leveraged Expo's production pipeline to push over-the-air (OTA) updates without requiring user to update the app.",
+			"Optimized application performance using Redux and AsyncStorage for state management, local message caching, and offline persistence.",
+			"Leveraged Expo's production pipeline to push over-the-air (OTA) updates without requiring users to natively update the app.",
 			"Focused heavily on user-friendly layout and easy-of-use design."
 		],
         "images": komitoImages,
