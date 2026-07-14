@@ -15,7 +15,10 @@ import SimpleBar from "simplebar-react";
 const Xbutton = motion.create(X);
 
 export default function Journey() {
-	const isSafari = /^((?!chrome|crios|android|fxios|edgios).)*safari/i.test(navigator.userAgent);
+	const isSafari =
+  /^((?!chrome|crios|android|fxios|edgios|opr).)*safari/i.test(
+    navigator.userAgent
+  );
 
 	const [openGallery, setOpenGallery] = useState<number | null>(null);
 	const [openVideoDemo, setOpenVideoDemo] = useState<number | null>(null);
@@ -25,14 +28,15 @@ export default function Journey() {
 	const startX = useRef(0);
 	const scrollStart = useRef(0);
 	const [isDragging, setIsDragging] = useState(false);
-	const dragStarted = useRef(false);
-
 	const velocity = useRef(0);
 	const lastX = useRef(0);
 	const animation = useRef<number | null>(null);
 
+
+	//mouse gestures
 	const onPointerDown = (e: React.PointerEvent) => {
     if (!containerRef.current) return;
+		if (e.pointerType === "touch") return;
 
     const target = e.target as HTMLElement;
 
@@ -43,7 +47,6 @@ export default function Journey() {
     setIsDragging(true);
     //containerRef.current.setPointerCapture(e.pointerId);
 
-		dragStarted.current = false;
     startX.current = e.clientX;
     lastX.current = e.clientX;
     scrollStart.current = containerRef.current.scrollLeft;
@@ -54,17 +57,11 @@ export default function Journey() {
     }
 	};
 
-
 	const onPointerMove = (e: React.PointerEvent) => {
 		if (!isDragging || !containerRef.current) return;
+		if (e.pointerType === "touch") return;
 
 		const dx = e.clientX - lastX.current;
-		if (!dragStarted.current) {
-			const totalDx = e.clientX - startX.current;
-			
-			if (Math.abs(totalDx) < 8) return;
-			dragStarted.current = true;
-		}
 
 		velocity.current = dx;
 		containerRef.current.scrollLeft -= dx;
@@ -72,8 +69,9 @@ export default function Journey() {
 	};
 
 
-	const onPointerUp = () => {
+	const onPointerUp = (e: React.PointerEvent) => {
 		if (!containerRef.current) return;
+		if (e.pointerType === "touch") return;
 
 		setIsDragging(false);
 
@@ -87,7 +85,7 @@ export default function Journey() {
 	const inertia = () => {
 		if (!containerRef.current) return;
 
-		velocity.current *= 0.95; //drag friction
+		velocity.current *= isSafari ? 10 : 0.90; //drag friction
 		containerRef.current.scrollLeft -= velocity.current;
 		if (Math.abs(velocity.current) > 0.5) {
 			animation.current = requestAnimationFrame(inertia);
@@ -119,7 +117,7 @@ export default function Journey() {
 
 			<div 	
 				ref={containerRef}
-				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: isSafari ? "none" : "pan-y"}}
+				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "auto"}}
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
