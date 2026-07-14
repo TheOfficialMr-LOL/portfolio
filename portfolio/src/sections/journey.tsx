@@ -22,6 +22,7 @@ export default function Journey() {
 	const startX = useRef(0);
 	const scrollStart = useRef(0);
 	const [isDragging, setIsDragging] = useState(false);
+	const dragStarted = useRef(false);
 
 	const velocity = useRef(0);
 	const lastX = useRef(0);
@@ -37,8 +38,9 @@ export default function Journey() {
     }
 
     setIsDragging(true);
-    containerRef.current.setPointerCapture(e.pointerId);
+    //containerRef.current.setPointerCapture(e.pointerId);
 
+		dragStarted.current = false;
     startX.current = e.clientX;
     lastX.current = e.clientX;
     scrollStart.current = containerRef.current.scrollLeft;
@@ -54,6 +56,13 @@ export default function Journey() {
 		if (!isDragging || !containerRef.current) return;
 
 		const dx = e.clientX - lastX.current;
+		if (!dragStarted.current) {
+			const totalDx = e.clientX - startX.current;
+			
+			if (Math.abs(totalDx) < 8) return;
+			dragStarted.current = true;
+		}
+
 		velocity.current = dx;
 		containerRef.current.scrollLeft -= dx;
 		lastX.current = e.clientX;
@@ -65,9 +74,9 @@ export default function Journey() {
 
 		setIsDragging(false);
 
-		if (containerRef.current.hasPointerCapture(e.pointerId)) {
-			containerRef.current.releasePointerCapture(e.pointerId);
-		}
+		//if (containerRef.current.hasPointerCapture(e.pointerId)) {
+		//	containerRef.current.releasePointerCapture(e.pointerId);
+		//}
 
 		inertia();
 	};
@@ -103,9 +112,11 @@ export default function Journey() {
 				{openExtendedDescription !== null && <ExtendedDescriptionCard experience={experience[openExtendedDescription]} setOpenExtendedDescription={setOpenExtendedDescription}/>}
 			</AnimatePresence>
 
+			<div className="noSelect" style={{...styles.cardButton, width: "200px", marginLeft: "20px", borderRadius: "20px", fontSize: "30px", borderBottomRightRadius: "0px", borderBottomLeftRadius: "0px", marginBottom: "-20px", boxShadow: "none"}}>Journey</div>
+
 			<div 	
 				ref={containerRef}
-				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "pan-y"}}
+				style={{...styles.cardHolder, cursor: isDragging ? "grabbing" : "grab", touchAction: "none"}}
 				onPointerDown={onPointerDown}
 				onPointerMove={onPointerMove}
 				onPointerUp={onPointerUp}
@@ -131,6 +142,7 @@ export default function Journey() {
 
 
 function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, setOpenExtendedDescription, ID}: any) {
+	
 	const isKomito = experience.title.includes("Komito");
 	const isCansat = experience.title.includes("Sensor");
 
@@ -160,7 +172,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 	}, []);
 
 	return (
-		<div style={styles.card}>
+		<div style={{...styles.card, borderTopLeftRadius: ID == 4 ? "0px" : "20px"}}>
 			{/*Header*/}
 			<div style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
 				<p style={{fontSize: "14px", color: "#999999"}}>{experience.start} - {experience.end}</p>
@@ -173,6 +185,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 
 			{/*image stack*/}
 			<motion.div 
+			className="noSelect"
 				ref={stackRef}
 				style={{...styles.imageStack, willChange: "transform"}}
 				onPointerDown={(e) => {e.stopPropagation();!isExploding ? setPressed(true) : null}}
@@ -294,7 +307,7 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 			</ul>
 
 			{/*Buttons*/}
-			<div style={{display: "inline-flex", flexDirection: "row", gap: "clamp(20px, 5vw, 70px)", justifyContent: "center", marginTop: "auto", paddingBottom: 30, paddingLeft: 10, paddingRight: 10, position: "relative"}}>
+			<div className="noSelect" style={{display: "inline-flex", flexDirection: "row", gap: "clamp(20px, 5vw, 70px)", justifyContent: "center", marginTop: "auto", paddingBottom: 30, paddingLeft: 10, paddingRight: 10, position: "relative"}}>
 				<PressableCard style={styles.cardButton} onPress={() => setOpenExtendedDescription(ID)}>Read More</PressableCard>
 
 				<PressableCard 
@@ -315,11 +328,11 @@ function ProjectCard({experience, onExplode, setOpenGallery, setOpenVideoDemo, s
 						<span style={{fontSize: "clamp(16px, 5vw, 20px)", whiteSpace: "nowrap"}}>{isKomito?"Video Demo":isCansat?"View Gallery":"Live Demo"}</span>
 						
 						{isKomito ? (
-								<SquarePlay style={{marginLeft: "10px", transform: "translateY(3px)"}} strokeWidth={3}/>
+								<SquarePlay style={{marginLeft: "10px"}} strokeWidth={3}/>
 							) : isCansat ? (
-								<Images style={{marginLeft: "10px", transform: "translateY(2px)"}} strokeWidth={3}/>
+								<Images style={{marginLeft: "10px"}} strokeWidth={3}/>
 							) : (
-								<ExternalLink style={{marginLeft: "10px", transform: "translateY(1.5px)"}} strokeWidth={3}/>
+								<ExternalLink style={{marginLeft: "10px"}} strokeWidth={3}/>
 							)
 						}
 					</div>
@@ -670,7 +683,7 @@ function ProjectImageGallery({ images, setOpenGallery, title }: any) {
 
 		setUiDragging(false);
 		dragging.current = false;
-		containerRef.current.releasePointerCapture(e.pointerId);
+		//containerRef.current.releasePointerCapture(e.pointerId);
 
 		startInertia();
 	};

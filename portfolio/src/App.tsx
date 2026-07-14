@@ -32,7 +32,7 @@ function App() {
   }, []);
 
   return (
-    <div style={styles.page}>
+    <div style={styles.page} className="noSelect">
       <br/>
       <Dock activeSection={activateSection}/>
       <section id="Profile" style={{scrollMarginTop: "80px"}}><Profile/></section>
