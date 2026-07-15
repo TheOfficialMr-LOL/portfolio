@@ -13,7 +13,7 @@ import { PressableCard } from "../animations/popOut";
 
 
 const aboutMe = [
-	"Full-stack React/React-Native developer",
+	"Full-stack React & React-Native developer",
 	"Discovered a passion for coding at the age of 11",
 	"4+ years 	experience in software development",
 	"Obsessed with clean, playful, and minimalistic UI designs",
