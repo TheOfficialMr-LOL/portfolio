@@ -107,7 +107,7 @@ const experience = [
 			"Built a Whatsapp-style real-time messaging system with efficient message synchronization, allowing students to contact and ask tutors questions.",
 			"Optimized application performance using Redux and AsyncStorage for state management, local message caching, and offline persistence.",
 			"Leveraged Expo's production pipeline to push over-the-air (OTA) updates without requiring users to natively update the app.",
-			"Focused heavily on user-friendly layout and easy-of-use design."
+			"Focused heavily on user-friendly layout and ease-of-use design."
 		],
         "images": komitoImages,
         "coverImage": komitoAppCoverImage,
