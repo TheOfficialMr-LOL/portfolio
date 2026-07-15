@@ -6,32 +6,19 @@ import gmailIcon from "../assets/socialLinks/gmail.png";
 import externalLink from "../assets/socialLinks/external-link.png";
 
 import { motion, useMotionValue, animate } from "framer-motion";
+import { Cross } from "lucide-react";
 
 import "./profile.css";
 import { PressableCard } from "../animations/popOut";
 
 
-{/*
-function socialCard(icon: string, text: string, link: boolean, name: string) {
-	const animation = popOut();
-
-	return (
-		<motion.div
-		className="socialsBox"
-			style={{ scale: animation.scale }}
-			onPointerDown={animation.press}
-			onPointerUp={animation.release}
-			onPointerLeave={animation.release}
-		>
-			<img src={icon} alt={`${name} icon`} className="socialIcon"/> <br/>
-			<span>{text}</span>
-			{link && <img src={externalLink} alt="external link logo" className="externalLinkIcon"></img>}
-		</motion.div>
-	);
-}
-*/}
-
-
+const aboutMe = [
+	"Full-stack React/React-Native developer",
+	"Discovered a passion for coding at the age of 11",
+	"4+ years 	experience in software development",
+	"Obsessed with clean, playful, and minimalistic UI designs",
+	"Interested in philosophy"
+];
 
 
 export default function Profile() {
@@ -81,11 +68,11 @@ export default function Profile() {
         
                 <br/>
                 <br/>
-                <span style={{fontWeight: "bold", color: "#5850c0"}}>Aeshan Jiniwal ● <i style={{fontWeight: "600"}}>He/Him</i></span>
+                <span style={{...styles.styledText, fontWeight: "bold", color: "#5850c0"}}>Aeshan Jiniwal ● <i style={{fontWeight: "600"}}>He/Him</i></span>
                 <br/>
-                <span style={{fontWeight: "600", color: "#4039a1", fontSize: "14px"}}>AKA</span>
+                <span style={{...styles.styledText, fontWeight: "600", color: "#4039a1", fontSize: "14px"}}>AKA</span>
                 <br/>
-                <span style={{fontWeight: "bold", color: "#5850c0"}}>Mr LOL</span>
+                <span style={{...styles.styledText, fontWeight: "bold", color: "#5850c0"}}>Mr LOL</span>
 								<br/>
 								<br/>
 								
@@ -133,13 +120,25 @@ export default function Profile() {
 							<div style={styles.aboutMeCard} className="noSelect">
 								<div style={styles.aboutMeHeader}><span>About Me</span></div>
 
+
+								<svg width="0" height="0">
+									<defs>
+										<linearGradient id="crossGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+											<stop offset="0%" stopColor="#7b61ff" />
+											<stop offset="45%" stopColor="#555bcc" />
+											<stop offset="100%" stopColor="#713ec9" />
+										</linearGradient>
+									</defs>
+								</svg>
+
 								<div style={styles.aboutMeBody}>
 									<ul style={styles.bulletList}>
-										<li>Full-stack React/React-Native developer</li>
-										<li>Discovered a passion for coding at the age of 11</li>
-										<li>4+ years 	experience in software development </li>
-										<li>Obsessive over clean, playful, and minimalistic UI designs</li>
-										<li>Pursuing a lifelong endeavour in learning new technologies</li>
+										{aboutMe.map((statement: string) => (
+											<li key={statement} style={{ display: "flex", alignItems: "flex-start", gap: "8px", marginBottom: "16px"}}>
+												<Cross stroke="url(#crossGradient)" fill="url(#crossGradient)" size={14} strokeWidth={3}  style={{ flexShrink: 0, marginTop: "5px"}}/>
+												<span style={{lineHeight: 1.2}}>{statement}</span>
+											</li>
+										))}
 									</ul>
 								</div>
 							</div>
@@ -164,7 +163,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 	},
 	bulletList: {
 		margin: 0,
-		paddingLeft: "24px",
+		paddingLeft: "10px",
 		paddingRight: "20px",
 		lineHeight: "1.6"
 	},
@@ -177,5 +176,12 @@ const styles: { [key: string]: React.CSSProperties } = {
 	},
 	aboutMeBody: {
 		padding: "16px 20px"
+	},
+	styledText: {
+		background: "linear-gradient(135deg, #7b61ff 0%, #555bcc 45%, #713ec9 100%)",
+    backgroundClip: "text",
+    WebkitBackgroundClip: "text",
+    color: "transparent",
+    WebkitTextFillColor: "transparent",
 	}
 };
